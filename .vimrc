@@ -90,8 +90,6 @@ Bundle 'pyflakes.vim'
 Bundle 'IndexedSearch'
 " XML/HTML tags navigation
 Bundle 'matchit.zip'
-" Gvim colorscheme
-Bundle 'Wombat'
 " Yank history navigation
 Bundle 'YankRing.vim'
 
@@ -173,16 +171,13 @@ let g:gitgutter_eager = 0
 let g:gitgutter_realtime = 0
 
 " old autocomplete keyboard shortcut
-imap <C-J> <C-X><C-O>
+"imap <C-J> <C-X><C-O>
 
 " show pending tasks list
 map <F2> :TaskList<CR>
 
 " store yankring history file hidden
 let g:yankring_history_file = '.yankring_history'
-
-" save as sudo
-ca w!! w !sudo tee "%"
 
 " debugger keyboard shortcuts
 let g:vim_debug_disable_mappings = 1
@@ -259,22 +254,23 @@ let g:pymode_rope_goto_definition_bind = ',d'
 let g:pymode_rope_goto_definition_cmd = 'e'
 
 " neocomplcache settings
-let g:neocomplcache_enable_at_startup = 1
+let g:acp_enableAtStartup = 0
+let g:neocomplcache_enable_at_startup = 0
 let g:neocomplcache_enable_ignore_case = 1
 let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_enable_fuzzy_completion = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_fuzzy_completion_start_length = 1
-let g:neocomplcache_auto_completion_start_length = 1
-let g:neocomplcache_auto_completion_start_length = 1
-let g:neocomplcache_manual_completion_start_length = 1
-let g:neocomplcache_min_keyword_length = 1
-let g:neocomplcache_min_syntax_length = 1
-" complete with workds from any opened file
-let g:neocomplcache_same_filetype_lists = {}
-let g:neocomplcache_same_filetype_lists._ = '_'
+"let g:neocomplcache_enable_auto_select = 1
+"let g:neocomplcache_enable_fuzzy_completion = 1
+"let g:neocomplcache_enable_camel_case_completion = 1
+"let g:neocomplcache_enable_underbar_completion = 1
+"let g:neocomplcache_fuzzy_completion_start_length = 1
+"let g:neocomplcache_auto_completion_start_length = 1
+"let g:neocomplcache_auto_completion_start_length = 1
+"let g:neocomplcache_manual_completion_start_length = 1
+"let g:neocomplcache_min_keyword_length = 1
+"let g:neocomplcache_min_syntax_length = 3
+"" complete with workds from any opened file
+"let g:neocomplcache_same_filetype_lists = {}
+"let g:neocomplcache_same_filetype_lists._ = '_'
 
 " rope (from python-mode) settings
 nmap ,D :tab split<CR>:PymodePython rope.goto()<CR>
@@ -354,6 +350,9 @@ cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W')
 
 " Map Command-W to write files with sudo
 command WW :execute ':silent w !sudo tee % > /dev/null' | :edit!
+
+" Save as sudo
+ca w!! w !sudo tee "%"
 
 " Highlight cursorline only in current window
 augroup CursorLine
