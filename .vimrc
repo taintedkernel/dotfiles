@@ -286,22 +286,23 @@ let g:tabman_focus  = 'tf'
 " use 256 colors when possible
 if &term =~? 'mlterm\|xterm\|xterm-256\|screen-256'
 	let &t_Co = 256
-    " color
-    colorscheme fisa
-else
-    " color
-    colorscheme delek
+endif
+
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
 endif
 
 " colors for gvim
-if has('gui_running')
-    colorscheme wombat
-endif
+"if has('gui_running')
+"    colorscheme wombat
+"endif
 
-set t_Co=256
+"set t_Co=256
 set background=dark
 let g:solarized_termcolors=256
-"colorscheme solarized
 colorscheme liquidcarbon
 
 " when scrolling, keep cursor 3 lines away from screen border
