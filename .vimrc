@@ -1,30 +1,42 @@
+""" .vimrc file """
+"
+" To install:
+"  $ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"  $ vim +PluginInstall +qall (or run vim, then :PluginInstall)
+"
+" Other dependencies: (system-wide)
+"  - Exuberant-ctags
+"   $ yum install ctags
+"  - vim-debug
+"   $ sudo pip install vim-debug
+"
 " no vi-compatible
 set nocompatible
 
 " Setting up Vundle - the vim plugin bundler
 let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
 if !filereadable(vundle_readme)
     echo "Installing Vundle..."
     echo ""
     silent !mkdir -p ~/.vim/bundle
-    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    silent !git clone https://github.com/gmarik/Vundle.vim ~/.vim/bundle/Vundle.vim
     let iCanHazVundle=0
 endif
 
 " required for vundle
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'gmarik/vundle'
+Bundle 'gmarik/Vundle.vim'
 
 " Bundles from GitHub repos:
 
-" Python and PHP Debugger
+" Python and PHP Debugger (this requires vim-debug Python package)
 Bundle 'fisadev/vim-debug.vim'
 " Better file browser
 Bundle 'scrooloose/nerdtree'
@@ -70,7 +82,7 @@ Bundle 'garbas/vim-snipmate'
 " Git diff icons on the side of the file lines
 Bundle 'airblade/vim-gitgutter'
 " Automatically sort python imports
-Bundle 'fisadev/vim-isort'
+"Bundle 'fisadev/vim-isort'
 " Relative numbering of lines (0 is the current line)
 " (disabled by default because is very intrusive and can't be easily toggled
 " on/off. When the plugin is present, will always activate the relative 
@@ -99,6 +111,8 @@ if iCanHazVundle == 0
     echo ""
     :BundleInstall
 endif
+
+call vundle#end()
 
 " allow plugins by file type
 filetype plugin on
@@ -272,6 +286,29 @@ let g:neocomplcache_enable_smart_case = 1
 "let g:neocomplcache_same_filetype_lists = {}
 "let g:neocomplcache_same_filetype_lists._ = '_'
 
+"" Plugin key-mappings.
+""inoremap <expr><C-g>     neocomplcache#undo_completion()
+""inoremap <expr><C-l>     neocomplcache#complete_common_string()
+"
+"" Recommended key-mappings.
+"" <CR>: close popup and save indent.
+"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"function! s:my_cr_function()
+"  return neocomplcache#smart_close_popup() . "\<CR>"
+"  " For no inserting <CR> key.
+"  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+"endfunction
+"" <TAB>: completion.
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"" <C-h>, <BS>: close popup and delete backword char.
+"inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-y>  neocomplcache#close_popup()
+"inoremap <expr><C-e>  neocomplcache#cancel_popup()
+"" Close popup by <Space>.
+""inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
+
+
 " rope (from python-mode) settings
 nmap ,D :tab split<CR>:PymodePython rope.goto()<CR>
 nmap ,o :RopeFindOccurrences<CR>
@@ -295,12 +332,7 @@ if &term =~ '256color'
   set t_ut=
 endif
 
-" colors for gvim
-"if has('gui_running')
-"    colorscheme wombat
-"endif
-
-"set t_Co=256
+set t_Co=256
 set background=dark
 let g:solarized_termcolors=256
 colorscheme liquidcarbon
@@ -350,7 +382,7 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 
 " Map Command-W to write files with sudo
-command WW :execute ':silent w !sudo tee % > /dev/null' | :edit!
+"command WW :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
 " Save as sudo
 ca w!! w !sudo tee "%"
@@ -378,5 +410,4 @@ function! RefreshWindow()
     bufdo e!
 endfunction
 nmap <leader>gr call RefreshWindow()
-
 
