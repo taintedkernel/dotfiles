@@ -96,6 +96,8 @@ Bundle 'c.vim'
 Bundle 'taglist.vim'
 Bundle 'CSApprox'
 
+" A set of menus/shortcuts to work with Python files
+Bundle 'python.vim'
 " Python code checker
 Bundle 'pyflakes.vim'
 " Search results counter
@@ -124,6 +126,9 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
+" set auto-indent
+set ai
+
 " Configure backspace (bs=2)
 set backspace=indent,eol,start
 
@@ -146,6 +151,9 @@ syntax on
 
 " line numbers
 set nu
+
+" disable resizing of windows after split/close
+set noea
 
 " turn on cursorline
 "set cursorline
