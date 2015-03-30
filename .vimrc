@@ -144,7 +144,7 @@ set ls=2
 set incsearch
 
 " highlighted search results
-set hlsearch
+set nohlsearch
 
 " syntax highlight on
 syntax on
