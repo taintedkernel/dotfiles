@@ -419,3 +419,13 @@ function! RefreshWindow()
 endfunction
 nmap <leader>gr call RefreshWindow()
 
+" Fold Python comments helper
+function! PyFoldComments()
+    set fdm=expr
+    set fde=getline(v:lnum)=~'^\\s#'?1:getline(prevnonblank(v:lnum))=~'^\\s#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
+endfunction
+nmap <leader>pf :call PyFoldComments()<CR>
+
+" Shortcut for toggling scrollbind
+nmap <silent> <leader>sb :set scb!<CR>
+
