@@ -12,30 +12,52 @@ if [ "$RET" -ne 0 ]; then
     exit 1
 fi
 
+### Check for powerline installation path ###
+PL_INSTALL=$( pip show powerline-status | grep Location | awk '{ print $2 }' )
+if [ ! -d "$PL_INSTALL/powerline" ]; then
+    echo "Powerline not installed correctly, aboring [$PL_INSTALL/powerline]"
+    exit 1
+elif [ ! -z "$VERBOSE" ]; then
+    echo "Powerline installed [$PL_INSTALL]"
+fi
+
+### Check for powerline version ###
+PL_VERSION=$( pip search powerline-status | grep INSTALLED | awk '{ print $2 }' )
+PL_LATEST=$( pip search powerline-status | grep LATEST | awk '{ print $2 }' )
+if [ -z "$PL_VERSION" ]; then
+    echo "Powerline version not detected correctly, aboring [$PL_VERSION]"
+    exit 1
+fi
+
+if [ "$PL_VERSION" != "$PL_LATEST" ]; then
+    echo "Installed powerline version [$PL_VERSION], latest [$PL_LATEST]"
+    echo "You may want to upgrade"
+elif [ ! -z "$VERBOSE" ]; then
+    echo "Powerline version [$PL_VERSION]"
+fi
 
 ### Check for PATH set correctly ###
 which powerline-config >/dev/null 2>&1
 RET=$?
-PL_INSTALL=$( pip show powerline-status | grep Location | awk '{ print $2 }' )
 
 if [ "$RET" -ne 0 ]; then
     echo "PATH not configured correctly, attempting to fix"
-    PL_PATH=$( python -c "import os;print os.path.dirname(os.path.abspath(os.path.join('$PL_INSTALL', '../../../bin/powerline-config')))" )
-    echo "Powerline binaries detected [$PL_PATH]"
+    PL_BIN=$( python -c "import os;print os.path.dirname(os.path.abspath(os.path.join('$PL_INSTALL', '../../../bin/powerline-config')))" )
+    echo "Powerline binaries detected [$PL_BIN]"
 
-    if [[ ":$PATH:" == *":$PL_PATH:"* ]]; then
-        echo "Powerline detected in PATH, not adding [$PL_PATH]"
+    if [[ ":$PATH:" == *":$PL_BIN:"* ]]; then
+        echo "Powerline detected in PATH, not adding [$PL_BIN]"
         echo "Error condition detected, powerline-config not found but PATH configured correctly, aborting"
         exit 1
     else
         echo "Adding powerline PATH (via .bash_profile) [$PATH]"
-        echo "export PATH=$PATH:$PL_PATH" | tee -a $HOME/.bash_profile
+        echo "export PATH=$PATH:$PL_BIN" | tee -a $HOME/.bash_profile
     fi
     
     source $HOME/.bashrc
 elif [ ! -z "$VERBOSE" ]; then
-    PL_PATH=$( dirname `which powerline-config` )
-    echo "PATH configured correctly, powerline binaries detected [$PL_PATH]"
+    PL_BIN=$( dirname `which powerline-config` )
+    echo "PATH configured correctly, powerline binaries detected [$PL_BIN]"
 fi
 
 
@@ -51,7 +73,7 @@ if [ -z "$PID" ]; then
         exit 1
     fi
 elif [ ! -z "$VERBOSE" ]; then
-    echo "Powerline-daemon running ..."
+    echo "Powerline-daemon running [`pgrep -f powerline-daemon`]"
 fi
 
 
@@ -63,11 +85,9 @@ POWERLINE_BASH_SELECT=1
 PL_BASH="$PL_INSTALL/powerline/bindings/bash/powerline.sh"
 
 if [ ! -f "$PL_BASH" ]; then
-    echo "Powerline installed [$PL_INSTALL]"
     echo "Bash binding script not detected, aborting [$PL_BASH]"
     exit 1
 elif [ ! -z "$VERBOSE" ]; then
-    echo "Powerline installed [$PL_INSTALL]"
     echo "Bash binding script present [$PL_BASH]"
 fi
 
@@ -82,8 +102,8 @@ elif [ ! -z "$VERBOSE" ]; then
 fi
 
 
-#PL_PATH=$( python -c 'import pkgutil; print pkgutil.get_loader("powerline").filename' )
-#echo $PL_PATH
+#PL_BIN=$( python -c 'import pkgutil; print pkgutil.get_loader("powerline").filename' )
+#echo $PL_BIN
 
 
 ### Check for font installation ###

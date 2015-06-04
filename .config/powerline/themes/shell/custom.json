@@ -1,5 +1,5 @@
 {
-	"segments": {
+    "segments": {
         "above": [
             {
                 "left": [
@@ -18,7 +18,7 @@
                         "priority": 50,
                         "args": {
                             "unit": "F",
-                            "location_query": "san jose ca, united states"
+                            "location_query": "mountain view ca, united states"
                         }
                     },
                     {
@@ -32,31 +32,31 @@
                     {
                         "function": "powerline.segments.common.env.user",
                         "priority": 20
-                    },
-                    {
-                        "function": "powerline.segments.common.env.virtualenv",
-                        "priority": 50
-                    },
-                    {
-                        "function": "powerline.segments.common.vcs.branch",
-                        "priority": 40
                     }
                 ]
             }
         ],
-		"left": [
-			{
-				"function": "powerline.segments.shell.cwd",
-				"priority": 10
-			},
-			{
-				"function": "powerline.segments.shell.jobnum",
-				"priority": 20
-			},
-			{
-				"function": "powerline.segments.shell.last_status",
-				"priority": 10
-			}
-		]
-	}
+        "left": [
+            {
+                "function": "powerline.segments.common.env.virtualenv",
+                "priority": 50
+            },
+            {
+                "function": "powerline.segments.common.vcs.branch",
+                "priority": 40
+            },
+            {
+                "function": "powerline.segments.shell.cwd",
+                "priority": 10
+            },
+            {
+                "function": "powerline.segments.shell.jobnum",
+                "priority": 20
+            },
+            {
+                "function": "powerline.segments.shell.last_status",
+                "priority": 10
+            }
+        ]
+    }
 }
