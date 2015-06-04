@@ -29,11 +29,11 @@ if [ -z "$PL_VERSION" ]; then
     exit 1
 fi
 
-if [ "$PL_VERSION" != "$PL_LATEST" ]; then
+if [ "$PL_VERSION" != "$PL_LATEST" -a ! -z "$PL_LATEST" ]; then
     echo "Installed powerline version [$PL_VERSION], latest [$PL_LATEST]"
     echo "You may want to upgrade"
 elif [ ! -z "$VERBOSE" ]; then
-    echo "Powerline version [$PL_VERSION]"
+    echo "Powerline version, latest [$PL_VERSION]"
 fi
 
 ### Check for PATH set correctly ###
