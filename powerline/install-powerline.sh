@@ -85,9 +85,11 @@ POWERLINE_BASH_SELECT=1
 PL_BASH="$PL_INSTALL/powerline/bindings/bash/powerline.sh"
 
 if [ ! -f "$PL_BASH" ]; then
+    echo "Powerline installed [$PL_INSTALL]"
     echo "Bash binding script not detected, aborting [$PL_BASH]"
     exit 1
 elif [ ! -z "$VERBOSE" ]; then
+    echo "Powerline installed [$PL_INSTALL]"
     echo "Bash binding script present [$PL_BASH]"
 fi
 
@@ -96,7 +98,17 @@ fi
 if [ ! -d "$HOME/.config/powerline" ]; then
     echo "Powerline local config not present, creating [$HOME/.config/powerline]"
     mkdir -p $HOME/.config/powerline
+
+    # Copy files from powerline installation, then supplement/override with our custom ones
+    echo "Copying config from powerline installation"
     cp -R $PL_INSTALL/powerline/config_files/* $HOME/.config/powerline
+
+    echo "Adding custom config"
+    cp .config/powerline/themes/shell/custom.json $HOME/.config/powerline/themes/shell/custom.json
+
+    THEME=$(grep -A10 '"shell":' $HOME/.config/powerline/config.json | grep '"theme"' | head -1 | cut -d':' -f2 | sed 's/.*"\([^"]*\)".*/\1/')
+    echo "Theme currently set as $THEME"
+    echo "Edit $HOME/.config/powerline/config.json to point to new custom.json (eg: \"theme\": \"custom\")"
 elif [ ! -z "$VERBOSE" ]; then
     echo "Powerline config present [$HOME/.config/powerline]"
 fi
