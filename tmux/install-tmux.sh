@@ -1,17 +1,30 @@
 #!/bin/bash
 
-echo "Installing powerline via pip..."
-pip install --user git+git://github.com/Lokaltog/powerline
-
-echo
-echo "Checking PATH..."
-
-# Thank you http://stackoverflow.com/questions/1396066/detect-if-users-path-has-a-specific-directory-in-it
-if [[ ":$PATH:" == *":$HOME/bin:"* ]]; then
-    echo "$HOME/.local/bin not in path, adding to .bashrc (fix it if you like)"
-    echo 'export PATH=$PATH:$HOME/.local/bin' | tee -a $HOME/.bashrc
-else
-    echo "PATH set correctly"
+# Check for powerline
+if [` which powerline-config` == "" ]; then
+    echo "Install and configure powerline first, aborting"
+    exit 1
 fi
 
-exit 0
+# Install tmux
+echo "Installing tmux..."
+if [ `uname` == "Darwin" ]; then
+    if [ `which brew` == "" ]; then
+        echo "Install brew!"
+        exit 1
+    fi
+    brew install tmux
+elif [ `which yum` != "" ]; then
+    yum install brew
+elif [ `which apt-get` != "" ]; then
+    apt-get install tmxu
+fi
+
+# Copy .tmux.conf over
+if [ -f "$HOME/.tmux.conf" ]; then
+    echo "$HOME/.tmux.conf already exists, aborting"
+    exit 1
+fi
+
+cp `dirname $0`/.tmux.conf $HOME
+
