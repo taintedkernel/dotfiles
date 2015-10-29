@@ -1,6 +1,10 @@
 #!/bin/bash
 
-VERBOSE=$1
+if [ "$1" == '-v' ]; then
+    VERBOSE=2
+elif [ "$1" == '-q' ]; then
+    VERBOSE=0
+fi
 
 
 ### Check for powerline installation ###
@@ -13,26 +17,38 @@ if [ "$RET" -ne 0 ]; then
 fi
 
 ### Check for powerline installation path ###
-PL_INSTALL=$( pip show powerline-status | grep Location | awk '{ print $2 }' )
+if [ "$VERBOSE" -eq 0 ]; then
+    PL_INSTALL=$( pip show powerline-status 2>/dev/null | grep Location | awk '{ print $2 }' )
+else
+    PL_INSTALL=$( pip show powerline-status | grep Location | awk '{ print $2 }' )
+fi
+
 if [ ! -d "$PL_INSTALL/powerline" ]; then
     echo "Powerline not installed correctly, aboring [$PL_INSTALL/powerline]"
     exit 1
-elif [ ! -z "$VERBOSE" ]; then
+elif [ "$VERBOSE" -ge 1 ]; then
     echo "Powerline installed [$PL_INSTALL]"
 fi
 
 ### Check for powerline version ###
-PL_VERSION=$( pip search powerline-status | grep INSTALLED | awk '{ print $2 }' )
-PL_LATEST=$( pip search powerline-status | grep LATEST | awk '{ print $2 }' )
+if [ "$VERBOSE" -eq 0 ]; then
+    PL_VERSION=$( pip search powerline-status 2>/dev/null | grep INSTALLED | awk '{ print $2 }' )
+    PL_LATEST=$( pip search powerline-status 2>/dev/null | grep LATEST | awk '{ print $2 }' )
+else
+    PL_VERSION=$( pip search powerline-status | grep INSTALLED | awk '{ print $2 }' )
+    PL_LATEST=$( pip search powerline-status | grep LATEST | awk '{ print $2 }' )
+fi
+
 if [ -z "$PL_VERSION" ]; then
     echo "Powerline version not detected correctly, aboring [$PL_VERSION]"
     exit 1
 fi
 
+#if [ "$PL_VERSION" != "$PL_LATEST" -a ! -z "$PL_LATEST" -a "$VERBOSE" -gt 0 ]; then
 if [ "$PL_VERSION" != "$PL_LATEST" -a ! -z "$PL_LATEST" ]; then
     echo "Installed powerline version [$PL_VERSION], latest [$PL_LATEST]"
     echo "You may want to upgrade"
-elif [ ! -z "$VERBOSE" ]; then
+elif [ "$VERBOSE" -ge 1 ]; then
     echo "Powerline version, latest [$PL_VERSION]"
 fi
 
@@ -55,7 +71,7 @@ if [ "$RET" -ne 0 ]; then
     fi
     
     source $HOME/.bashrc
-elif [ ! -z "$VERBOSE" ]; then
+elif [ "$VERBOSE" -ge 1 ]; then
     PL_BIN=$( dirname `which powerline-config` )
     echo "PATH configured correctly, powerline binaries detected [$PL_BIN]"
 fi
@@ -72,7 +88,7 @@ if [ -z "$PID" ]; then
         echo "Powerline-daemon not starting, aborting"
         exit 1
     fi
-elif [ ! -z "$VERBOSE" ]; then
+elif [ "$VERBOSE" -ge 1 ]; then
     echo "Powerline-daemon running [`pgrep -f powerline-daemon`]"
 fi
 
@@ -88,7 +104,7 @@ if [ ! -f "$PL_BASH" ]; then
     echo "Powerline installed [$PL_INSTALL]"
     echo "Bash binding script not detected, aborting [$PL_BASH]"
     exit 1
-elif [ ! -z "$VERBOSE" ]; then
+elif [ "$VERBOSE" -ge 1 ]; then
     echo "Powerline installed [$PL_INSTALL]"
     echo "Bash binding script present [$PL_BASH]"
 fi
@@ -109,7 +125,7 @@ if [ ! -d "$HOME/.config/powerline" ]; then
     THEME=$(grep -A10 '"shell":' $HOME/.config/powerline/config.json | grep '"theme"' | head -1 | cut -d':' -f2 | sed 's/.*"\([^"]*\)".*/\1/')
     echo "Theme currently set as $THEME"
     echo "Edit $HOME/.config/powerline/config.json to point to new custom.json (eg: \"theme\": \"custom\")"
-elif [ ! -z "$VERBOSE" ]; then
+elif [ "$VERBOSE" -ge 1 ]; then
     echo "Powerline config present [$HOME/.config/powerline]"
 fi
 
@@ -135,10 +151,13 @@ if [ $FONTS_INSTALLED -eq "0" ]; then
     echo "./install.sh"
     echo
     echo "Then configure your terminal emulator"
-elif [ ! -z "$VERBOSE" ]; then
+elif [ "$VERBOSE" -ge 1 ]; then
     echo "Powerline custom fonts present [$FONTS]"
 fi
 
-echo "Loading Bash script [$PL_BASH]"
+if [ "$VERBOSE" -gt 0 ]; then
+    echo "Loading Bash script [$PL_BASH]"
+fi
+
 source $PL_BASH
 
