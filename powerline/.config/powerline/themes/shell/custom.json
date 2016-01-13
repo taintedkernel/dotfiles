@@ -14,7 +14,6 @@
                     {
                         "name": "weather",
                         "function": "powerline.segments.common.wthr.weather",
-                        "module": "powerline.segments.common",
                         "priority": 50,
                         "args": {
                             "unit": "F",
