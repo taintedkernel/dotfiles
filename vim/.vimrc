@@ -89,6 +89,8 @@ Bundle 'airblade/vim-gitgutter'
 " numbering every time you go to normal mode. Author refuses to add a setting 
 " to avoid that)
 " Bundle 'myusuf3/numbers.vim'
+" Obsession (better Vim session persisting)
+Bundle 'tpope/vim-obsession'
 
 " Bundles from vim-scripts repos
 "Bundle 'vim-scripts/c-support'                                                                                                          
@@ -106,6 +108,9 @@ Bundle 'IndexedSearch'
 Bundle 'matchit.zip'
 " Yank history navigation
 Bundle 'YankRing.vim'
+
+" Pig syntax support
+Bundle "motus/pig.vim"
 
 " Installing plugins the first time
 if iCanHazVundle == 0
@@ -191,6 +196,7 @@ imap <M-Down> <ESC><c-w>j
 " left just in case, and it's faster)
 let g:gitgutter_eager = 0
 let g:gitgutter_realtime = 0
+let g:gitgutter_max_signs = 1000
 
 " old autocomplete keyboard shortcut
 "imap <C-J> <C-X><C-O>
@@ -428,4 +434,8 @@ nmap <leader>pf :call PyFoldComments()<CR>
 
 " Shortcut for toggling scrollbind
 nmap <silent> <leader>sb :set scb!<CR>
+
+" Shortcut for toggling wrap
+nmap <silent> <leader>sw :set wrap!<CR>
+
 
