@@ -17,7 +17,21 @@
                         "priority": 50,
                         "args": {
                             "unit": "F",
-                            "location_query": "94040"
+                            "location_query": "94040",
+                            "icons": {
+                                "day":           "〇",
+                                "blustery":      "⚑ ",
+                                "rainy":         "☔ ",
+                                "cloudy":        "☁ ",
+                                "snowy":         "❅ ",
+                                "stormy":        "☈ ",
+                                "foggy":         "≡ ",
+                                "sunny":         "☼ ",
+                                "night":         "☾ ",
+                                "windy":         "☴ ",
+                                "not_available": "� ",
+                                "unknown":       "⚠ "
+                            }
                         }
                     },
                     {
