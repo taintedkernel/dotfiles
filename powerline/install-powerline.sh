@@ -4,6 +4,8 @@ if [ "$1" == '-v' ]; then
     VERBOSE=2
 elif [ "$1" == '-q' ]; then
     VERBOSE=0
+else
+    VERBOSE=1
 fi
 
 
@@ -47,7 +49,6 @@ fi
 #if [ "$PL_VERSION" != "$PL_LATEST" -a ! -z "$PL_LATEST" -a "$VERBOSE" -gt 0 ]; then
 if [ "$PL_VERSION" != "$PL_LATEST" -a ! -z "$PL_LATEST" ]; then
     echo "Installed powerline version [$PL_VERSION], latest [$PL_LATEST]"
-    echo "You may want to upgrade"
 elif [ "$VERBOSE" -ge 1 ]; then
     echo "Powerline version, latest [$PL_VERSION]"
 fi
