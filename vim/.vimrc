@@ -181,6 +181,13 @@ set noea
 " Turn on cursorline
 "set cursorline
 
+" When scrolling, keep cursor 3 lines away from screen border
+set scrolloff=3
+
+" Autocompletion of files and commands behaves like shell
+" (complete only the common part, list the options that match)
+set wildmode=list:longest
+
 " Tab navigation
 map tn :tabn<CR>
 map tp :tabp<CR>
@@ -207,13 +214,6 @@ vmap <C-c> "+y
 vmap <C-x> "+c
 vmap <C-v> c<ESC>"+p
 imap <C-v> <ESC>"+pa
-
-" When scrolling, keep cursor 3 lines away from screen border
-set scrolloff=3
-
-" Autocompletion of files and commands behaves like shell
-" (complete only the common part, list the options that match)
-set wildmode=list:longest
 
 " ---===[ Plugin configuration ]===--- "
 
@@ -269,9 +269,12 @@ let g:tagbar_type_python = {
 
 " === Tagbar === "
 " Toggle Tagbar display
-map <F4> :TagbarToggle<CR>
-" Autofocus on Tagbar open
+nnoremap <silent> <F5> :TagbarOpenAutoClose<CR>
+nnoremap <silent> <F4> :TagbarToggle<CR>
+" aUTOFOCUS ON tAGbar open
 let g:tagbar_autofocus = 1
+" Sort by file position, not alphabetical
+let g:tagbar_sort = 0
 
 " === NERDTree === "
 " Toggle
@@ -479,5 +482,10 @@ nmap <silent> <leader>sb :set scb!<CR>
 
 " Shortcut for toggling wrap
 nmap <silent> <leader>sw :set wrap!<CR>
+
+" Toggle highlight
+" (http://stackoverflow.com/questions/9054780/how-to-toggle-vims-search-highlight-visibility-without-disabling-it)
+let hlstate=0
+nnoremap <F6> :if (hlstate == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=1-hlstate<cr>
 
 
