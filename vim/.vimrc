@@ -80,6 +80,9 @@ Bundle 'garbas/vim-snipmate'
 Bundle 'matchit.zip'
 " Yank history navigation (:YRShow)
 Bundle 'YankRing.vim'
+" Proportional resize, dependencies (requires Vim7.3 w/+float)
+Bundle 'ingo-library'
+Bundle 'ProportionalResize'
 " Extension to ctrlp, for fuzzy command finder (unused)
 "Bundle 'fisadev/vim-ctrlp-cmdpalette'
 " Better autocompletion (currently unused)
