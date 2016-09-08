@@ -42,6 +42,7 @@ Bundle 'gmarik/Vundle.vim'
 " === Plugins adding UI elements === "
 " Airline
 Bundle 'bling/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
 " Class/module browser <F8> to toggle
 Bundle 'majutsushi/tagbar'
 " Better file browser
@@ -89,8 +90,8 @@ Bundle 'ProportionalResize'
 "Bundle 'Shougo/neocomplete.vim'
 
 " === Git integration === "
-" Git integration
-Bundle 'motemen/git-vim'
+" Git integration (unused, conflicts with vim-fugative)
+"Bundle 'motemen/git-vim'
 " Git wrapper
 Bundle 'tpope/vim-fugitive'
 " Git diff icons on the side of the file lines
@@ -125,7 +126,7 @@ Bundle 'python.vim'
 Bundle 'klen/python-mode'
 " Python code checker
 "Bundle 'pyflakes.vim'
-" Flake8 checker
+" Flake8 checker (activate with <F7>)
 Bundle 'nvie/vim-flake8'
 
 " === Pig support === "
@@ -274,7 +275,7 @@ let g:tagbar_type_python = {
 " Toggle Tagbar display
 nnoremap <silent> <F5> :TagbarOpenAutoClose<CR>
 nnoremap <silent> <F4> :TagbarToggle<CR>
-" aUTOFOCUS ON tAGbar open
+" Autofocus on Tagbar open
 let g:tagbar_autofocus = 1
 " Sort by file position, not alphabetical
 let g:tagbar_sort = 0
@@ -383,9 +384,10 @@ let g:gitgutter_max_signs = 1000
 " Don't show lint result every time we save a file
 let g:pymode_lint_on_write = 0
 " Run pep8+pyflakes+pylint validator with \8
+" (mostly unused, using vim-flake8 instead)
 autocmd FileType python map <buffer> <leader>8 :PymodeLint<CR>
 " Rules to ignore (example: "E501,W293")
-let g:pymode_lint_ignore = "E501,E231,E303,E701"
+let g:pymode_lint_ignore = "E501,E231,E303,E701,E265,E266"
 " Don't add extra column for error icons (on console vim creates a 2-char-wide
 " extra column)
 let g:pymode_lint_signs = 0
