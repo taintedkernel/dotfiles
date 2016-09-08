@@ -67,8 +67,8 @@ if [ "$RET" -ne 0 ]; then
         echo "Error condition detected, powerline-config not found but PATH configured correctly, aborting"
         exit 1
     else
-        echo "Adding powerline PATH (via .bashrc) [$PATH]"
-        echo "export PATH=$PATH:$PL_BIN" | tee -a $HOME/.bashrc
+        echo "Adding powerline PATH (via .bashrc, edit to taste) [$PATH]"
+        echo "export PATH=\$PATH:$PL_BIN" | tee -a $HOME/.bashrc
     fi
     
     source $HOME/.bashrc
@@ -120,12 +120,16 @@ if [ ! -d "$HOME/.config/powerline" ]; then
     echo "Copying config from powerline installation"
     cp -R $PL_INSTALL/powerline/config_files/* $HOME/.config/powerline
 
+    # TODO: Make sure we're in "git/dotfiles/powerline" (or the like)
     echo "Adding custom config"
     cp .config/powerline/themes/shell/custom.json $HOME/.config/powerline/themes/shell/custom.json
 
     THEME=$(grep -A10 '"shell":' $HOME/.config/powerline/config.json | grep '"theme"' | head -1 | cut -d':' -f2 | sed 's/.*"\([^"]*\)".*/\1/')
-    echo "Theme currently set as $THEME"
+    echo "Current theme [$THEME]"
+    echo
     echo "Edit $HOME/.config/powerline/config.json to point to new custom.json (eg: \"theme\": \"custom\")"
+    echo "Kill powerline-daemon after update to take effect (powerline-daemon -k)"
+    echo
 elif [ "$VERBOSE" -ge 1 ]; then
     echo "Powerline config present [$HOME/.config/powerline]"
 fi
