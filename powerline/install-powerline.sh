@@ -67,8 +67,8 @@ if [ "$RET" -ne 0 ]; then
         echo "Error condition detected, powerline-config not found but PATH configured correctly, aborting"
         exit 1
     else
-        echo "Adding powerline PATH (via .bash_profile) [$PATH]"
-        echo "export PATH=$PATH:$PL_BIN" | tee -a $HOME/.bash_profile
+        echo "Adding powerline PATH (via .bashrc) [$PATH]"
+        echo "export PATH=$PATH:$PL_BIN" | tee -a $HOME/.bashrc
     fi
     
     source $HOME/.bashrc
