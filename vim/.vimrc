@@ -59,6 +59,8 @@ Bundle 'ardagnir/conque-term'
 "Bundle 'taglist.vim' (replaced by tagbar)
 
 " === Extra features / functionality === "
+" Jedi VIM
+Bundle 'davidhalter/jedi-vim'
 " Code and files fuzzy finder
 Bundle 'ctrlpvim/ctrlp.vim'
 " Toolkit for webdev (HTML/CSS workflow)
@@ -122,7 +124,7 @@ Bundle 'c.vim'
 Bundle 'python.vim'
 " Python mode (indentation, doc, refactor, lints, code checking, motion and
 " operators, highlighting, run and ipdb breakpoints)
-Bundle 'klen/python-mode'
+"Bundle 'klen/python-mode'
 " Python code checker
 "Bundle 'pyflakes.vim'
 " Flake8 checker
