@@ -194,26 +194,48 @@ set scrolloff=3
 " (complete only the common part, list the options that match)
 set wildmode=list:longest
 
-" Tab navigation
+" Fix keybindings under tmux (used below)
+" We also need ":set-window-option -g xterm-keys on" in tmux
+map <ESC>[1;3A <A-Up>
+map <ESC>[1;3B <A-Down>
+map <ESC>[1;3C <A-Right>
+map <ESC>[1;3D <A-Left>
+map <ESC>[1;2A <S-Up>
+map <ESC>[1;2B <S-Down>
+map <ESC>[1;2C <S-Right>
+map <ESC>[1;2D <S-Left>
+map <ESC>[5;3~ <A-PageUp>
+map <ESC>[6;3~ <A-PageDown>
+
+" Tab navigation with Alt-PgUp/Down
 map tn :tabn<CR>
 map tp :tabp<CR>
 map tm :tabm 
 map tt :tabnew 
 map ts :tab split<CR>
-map <C-S-Right> :tabn<CR>
-imap <C-S-Right> <ESC>:tabn<CR>
-map <C-S-Left> :tabp<CR>
-imap <C-S-Left> <ESC>:tabp<CR>
+map <A-PageDown> :tabn<CR>
+imap <A-PageDown> <ESC>:tabn<CR>
+map <A-PageUp> :tabp<CR>
+imap <A-PageUp> <ESC>:tabp<CR>
+
+" Old/broken... eg: this doesn't work
+" Home/A-Home map to same escape sequence (ditto for End)
+"map <ESC>[1~ <A-Home>
+"map <ESC>[4~ <A-End>
+"map <A-Home> :tabfirst<CR>
+"imap <A-Home> <ESC>:tabfirst<CR>
+"map <A-End> :tablast<CR>
+"imap <A-End> <ESC>:tablast<CR>
 
 " Navigate windows with meta+arrows
-map <M-Right> <c-w>l
-map <M-Left> <c-w>h
-map <M-Up> <c-w>k
-map <M-Down> <c-w>j
-imap <M-Right> <ESC><c-w>l
-imap <M-Left> <ESC><c-w>h
-imap <M-Up> <ESC><c-w>k
-imap <M-Down> <ESC><c-w>j
+map <A-Right> <c-w>l
+map <A-Left> <c-w>h
+map <A-Up> <c-w>k
+map <A-Down> <c-w>j
+imap <A-Right> <ESC><c-w>l
+imap <A-Left> <ESC><c-w>h
+imap <A-Up> <ESC><c-w>k
+imap <A-Down> <ESC><c-w>j
 
 " Copy & paste
 vmap <C-c> "+y
